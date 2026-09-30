@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login · FlowBoard</title>
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+  <body class="auth-body">
+    <div data-nav></div>
+
+    <main class="container auth-shell">
+      <section class="auth-visual">
+        <div class="auth-visual-content">
+          <span class="eyebrow light-eyebrow">Stay in sync</span>
+          <h1>Your team’s work, ready when you are.</h1>
+          <p>Return to shared boards, active tasks, project conversations, and the work already moving forward.</p>
+
+          <div class="auth-board-illustration">
+            <div class="auth-board-top">
+              <span></span><span></span><span></span>
+              <div class="auth-avatar-row">
+                <i>NA</i><i>OA</i><i>SK</i>
+              </div>
+            </div>
+            <div class="auth-board-columns">
+              <div><b></b><span></span><span></span></div>
+              <div class="auth-board-active"><b></b><span></span><span></span><span></span></div>
+              <div><b></b><span></span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="auth-card">
+        <span class="eyebrow">Welcome back</span>
+        <h2>Login to FlowBoard</h2>
+        <p class="muted auth-intro">Continue managing projects and collaborating with your team.</p>
+
+        <div id="msg" class="notice"></div>
+
+        <form id="form">
+          <div class="field">
+            <label>Email</label>
+            <input id="email" type="email" placeholder="you@example.com" required>
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <input id="password" type="password" placeholder="Enter your password" required>
+          </div>
+          <button class="btn auth-submit">Login</button>
+        </form>
+
+        <p class="muted auth-switch">No account? <a href="/register.html">Create one</a></p>
+      </section>
+    </main>
+
+    <script src="/js/common.js"></script>
+    <script>
+      document.getElementById('form').addEventListener('submit', async e => {
+        e.preventDefault();
+        try {
+          await api('/auth/login', {
+            method: 'POST',
+            body: JSON.stringify({ email: email.value, password: password.value })
+          });
+          location.href = '/dashboard.html';
+        } catch (err) {
+          msg.className = 'notice error show';
+          msg.textContent = err.message;
+        }
+      });
+    </script>
+  </body>
+</html>

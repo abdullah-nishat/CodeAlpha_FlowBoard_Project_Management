@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Register · FlowBoard</title>
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+  <body class="auth-body">
+    <div data-nav></div>
+
+    <main class="container auth-shell">
+      <section class="auth-visual register-visual">
+        <div class="auth-visual-content">
+          <span class="eyebrow light-eyebrow">Work better together</span>
+          <h1>Give every project a clear place to move forward.</h1>
+          <p>Create shared spaces, bring in teammates, and turn plans into visible progress.</p>
+
+          <div class="team-visual">
+            <div class="team-orbit orbit-one"><span>NA</span></div>
+            <div class="team-orbit orbit-two"><span>OA</span></div>
+            <div class="team-orbit orbit-three"><span>SK</span></div>
+            <div class="team-center">
+              <div class="center-card"><i></i><i></i><i></i></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="auth-card">
+        <span class="eyebrow">Get started</span>
+        <h2>Create your account</h2>
+        <p class="muted auth-intro">Set up your workspace and start collaborating in a few steps.</p>
+
+        <div id="msg" class="notice"></div>
+
+        <form id="form">
+          <div class="field">
+            <label>Full name</label>
+            <input id="fullName" placeholder="Your full name" required>
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input id="email" type="email" placeholder="you@example.com" required>
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <input id="password" type="password" minlength="6" placeholder="At least 6 characters" required>
+          </div>
+          <div class="field">
+            <label>Confirm password</label>
+            <input id="confirmPassword" type="password" minlength="6" placeholder="Repeat your password" required>
+          </div>
+          <button class="btn auth-submit">Create Account</button>
+        </form>
+
+        <p class="muted auth-switch">Already have an account? <a href="/login.html">Login</a></p>
+      </section>
+    </main>
+
+    <script src="/js/common.js"></script>
+    <script>
+      document.getElementById('form').addEventListener('submit', async e => {
+        e.preventDefault();
+        try {
+          await api('/auth/register', {
+            method: 'POST',
+            body: JSON.stringify({
+              fullName: fullName.value,
+              email: email.value,
+              password: password.value,
+              confirmPassword: confirmPassword.value
+            })
+          });
+          location.href = '/dashboard.html';
+        } catch (err) {
+          msg.className = 'notice error show';
+          msg.textContent = err.message;
+        }
+      });
+    </script>
+  </body>
+</html>

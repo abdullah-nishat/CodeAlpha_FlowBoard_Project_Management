@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Board · FlowBoard</title>
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+  <body>
+    <div data-nav></div>
+
+    <main class="container section board-page">
+      <section class="board-header-card">
+        <div class="board-header-copy">
+          <div id="projectAvatar" class="project-avatar-large">FB</div>
+          <div>
+            <span class="eyebrow">Project board</span>
+            <h1 id="projectTitle">Project Board</h1>
+            <p id="projectDescription" class="muted"></p>
+          </div>
+        </div>
+
+        <div class="board-header-actions">
+          <div id="headerMemberAvatars" class="avatar-stack"></div>
+          <button class="btn secondary" id="membersBtn">Members</button>
+          <button class="btn" id="taskBtn">+ Add Task</button>
+        </div>
+      </section>
+
+      <div id="msg" class="notice"></div>
+
+      <div id="membersPanel" class="panel members-panel" style="display:none;">
+        <div class="panel-heading">
+          <div>
+            <span class="eyebrow">Team</span>
+            <h2>Project Members</h2>
+            <p class="muted">Manage who can access and contribute to this project.</p>
+          </div>
+        </div>
+
+        <div id="memberFormWrap">
+          <form id="memberForm" class="member-add-form">
+            <div class="field member-email-field">
+              <label>Add by email</label>
+              <input id="memberEmail" type="email" placeholder="teammate@example.com" required>
+            </div>
+            <button class="btn">Add Member</button>
+          </form>
+        </div>
+
+        <div class="member-section-block">
+          <h3>Current Members</h3>
+          <div id="memberList" class="member-list"></div>
+        </div>
+
+        <div id="availableUsersWrap" class="member-section-block" style="display:none;">
+          <div class="section-title compact-title">
+            <div>
+              <h3>Available Users</h3>
+              <p class="muted">Registered users who can be added to this project.</p>
+            </div>
+          </div>
+          <div id="availableUsers" class="available-user-list"></div>
+        </div>
+      </div>
+
+      <div id="taskFormBox" class="panel task-create-panel" style="display:none;">
+        <div class="panel-heading">
+          <div>
+            <span class="eyebrow">New task</span>
+            <h2>Create a task</h2>
+          </div>
+        </div>
+
+        <form id="taskForm">
+          <div class="two-col">
+            <div>
+              <div class="field">
+                <label>Task title</label>
+                <input id="taskTitle" placeholder="What needs to be done?" required>
+              </div>
+              <div class="field">
+                <label>Description</label>
+                <textarea id="taskDescription" placeholder="Add context, requirements, or notes..."></textarea>
+              </div>
+            </div>
+            <div>
+              <div class="field">
+                <label>Assignee</label>
+                <select id="taskAssignee"></select>
+              </div>
+              <div class="field">
+                <label>Priority</label>
+                <select id="taskPriority">
+                  <option value="LOW">Low</option>
+                  <option value="MEDIUM" selected>Medium</option>
+                  <option value="HIGH">High</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Due date</label>
+                <input id="taskDueDate" type="date">
+              </div>
+            </div>
+          </div>
+          <button class="btn">Create Task</button>
+        </form>
+      </div>
+
+      <section class="board-summary" aria-label="Board summary">
+        <div><span class="summary-dot todo"></span><strong id="summaryTodo">0</strong><span>To Do</span></div>
+        <div><span class="summary-dot progress-dot"></span><strong id="summaryProgress">0</strong><span>In Progress</span></div>
+        <div><span class="summary-dot review-dot"></span><strong id="summaryReview">0</strong><span>Review</span></div>
+        <div><span class="summary-dot done"></span><strong id="summaryDone">0</strong><span>Done</span></div>
+      </section>
+
+      <div class="board-wrap">
+        <div class="board">
+          <section class="column" data-status="TODO">
+            <div class="column-head">
+              <span class="column-title"><i class="status-dot todo"></i>To Do</span>
+              <span class="column-count" id="countTODO">0</span>
+            </div>
+            <div id="TODO" class="task-list"></div>
+          </section>
+
+          <section class="column" data-status="IN_PROGRESS">
+            <div class="column-head">
+              <span class="column-title"><i class="status-dot progress-dot"></i>In Progress</span>
+              <span class="column-count" id="countIN_PROGRESS">0</span>
+            </div>
+            <div id="IN_PROGRESS" class="task-list"></div>
+          </section>
+
+          <section class="column" data-status="REVIEW">
+            <div class="column-head">
+              <span class="column-title"><i class="status-dot review-dot"></i>Review</span>
+              <span class="column-count" id="countREVIEW">0</span>
+            </div>
+            <div id="REVIEW" class="task-list"></div>
+          </section>
+
+          <section class="column" data-status="DONE">
+            <div class="column-head">
+              <span class="column-title"><i class="status-dot done"></i>Done</span>
+              <span class="column-count" id="countDONE">0</span>
+            </div>
+            <div id="DONE" class="task-list"></div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <div id="taskModal" class="modal-backdrop">
+      <div class="modal">
+        <div class="modal-head">
+          <div>
+            <span id="modalPriority" class="badge"></span>
+            <h2 id="modalTitle"></h2>
+          </div>
+          <button class="close-btn" id="closeModal">×</button>
+        </div>
+
+        <p id="modalDescription" class="muted modal-description"></p>
+
+        <div class="two-col">
+          <div class="field">
+            <label>Status</label>
+            <select id="modalStatus">
+              <option value="TODO">To Do</option>
+              <option value="IN_PROGRESS">In Progress</option>
+              <option value="REVIEW">Review</option>
+              <option value="DONE">Done</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Assignee</label>
+            <select id="modalAssignee"></select>
+          </div>
+        </div>
+
+        <div class="actions modal-actions">
+          <button class="btn" id="saveTaskBtn">Save Changes</button>
+          <button class="btn danger" id="deleteTaskBtn">Delete Task</button>
+        </div>
+
+        <div class="modal-divider"></div>
+
+        <div class="comments-heading">
+          <div>
+            <span class="eyebrow">Discussion</span>
+            <h3>Comments</h3>
+          </div>
+        </div>
+
+        <form id="commentForm" class="comment-form">
+          <div class="field">
+            <textarea id="commentText" placeholder="Write a comment..." required></textarea>
+          </div>
+          <button class="btn">Add Comment</button>
+        </form>
+        <div id="comments" class="comments"></div>
+      </div>
+    </div>
+
+    <div data-footer></div>
+    <script src="/js/common.js"></script>
+    <script src="/js/board.js"></script>
+  </body>
+</html>

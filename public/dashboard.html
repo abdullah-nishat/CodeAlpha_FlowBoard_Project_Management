@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Projects · FlowBoard</title>
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+  <body>
+    <div data-nav></div>
+
+    <main class="container section dashboard-page">
+      <section class="dashboard-hero">
+        <div>
+          <span class="eyebrow">Workspace</span>
+          <h1>Your projects at a glance.</h1>
+          <p class="muted">See progress, open a board, or start something new with your team.</p>
+        </div>
+        <button class="btn btn-lg" id="showCreateBtn">+ Create Project</button>
+      </section>
+
+      <div id="msg" class="notice"></div>
+
+      <section id="workspaceStats" class="workspace-stats" aria-label="Workspace summary">
+        <div class="summary-card"><span class="summary-icon">▦</span><div><strong id="statProjects">0</strong><span>Projects</span></div></div>
+        <div class="summary-card"><span class="summary-icon">✓</span><div><strong id="statTasks">0</strong><span>Total tasks</span></div></div>
+        <div class="summary-card"><span class="summary-icon">●</span><div><strong id="statDone">0</strong><span>Completed</span></div></div>
+        <div class="summary-card"><span class="summary-icon">↗</span><div><strong id="statProgress">0%</strong><span>Overall progress</span></div></div>
+      </section>
+
+      <div id="createBox" class="panel create-project-panel" style="display:none;">
+        <div class="panel-heading">
+          <div>
+            <span class="eyebrow">New workspace</span>
+            <h2>Create a project</h2>
+          </div>
+          <button class="close-btn" type="button" id="closeCreateBtn">×</button>
+        </div>
+        <form id="projectForm">
+          <div class="two-col">
+            <div class="field">
+              <label>Project name</label>
+              <input id="projectName" placeholder="e.g. Website Redesign" required>
+            </div>
+            <div class="field">
+              <label>Description</label>
+              <input id="projectDescription" placeholder="What is this project about?">
+            </div>
+          </div>
+          <button class="btn">Create Project</button>
+        </form>
+      </div>
+
+      <section class="projects-section">
+        <div class="section-title">
+          <div>
+            <h2>Projects</h2>
+            <p class="muted">Open a board to continue where your team left off.</p>
+          </div>
+        </div>
+        <div id="projects" class="project-grid"></div>
+      </section>
+    </main>
+
+    <div data-footer></div>
+    <script src="/js/common.js"></script>
+    <script src="/js/dashboard.js"></script>
+  </body>
+</html>
